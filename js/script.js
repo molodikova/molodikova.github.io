@@ -16,6 +16,23 @@ window.addEventListener('load', () => {
    let changeDisplayNumber = (str) => {
       return (str.length) ? parseFloat(str.replace(/\s/g, '')).toLocaleString('fr') : '';
    }
+   
+   let calculator = () => {
+   /* Formulae 
+      W - property value, A - initial payment, n - cretit term (months), I - interest rate;
+    */
+      let [W, A, n, I] = [...fieldData].map(el => parseFloat(el.value.replace( /\s/g, '')));
+   
+      let C = W - A;   // Loan sum
+      let P = C * ((I / 1200) + ((I / 1200) / (Math.pow(1 + I/1200, n * 12) - 1)));   //Monthly payment
+      let R = 5 * (P / 3); //Required income
+      let L = P * n * 12 - W + A;   //Overpayment
+
+      loanSum.innerHTML = (W && A) ? `${Math.round(C).toLocaleString('fr')} ₽` : '0 ₽';      
+      overPayment.innerHTML  = (W && A && n && I) ? `${Math.round(L).toLocaleString('fr')} ₽` : '0 ₽';
+      monthlyPayment.innerHTML = (W && A && n && I) ? `${Math.round(P).toLocaleString('fr')} ₽` : '0 ₽';
+      requiredIncome.innerHTML = (W && A && n && I) ? `${Math.round(R).toLocaleString('fr')} ₽` : '0 ₽';  
+   }
 
    let checkLocalStorage = () => {
       let savedData = localStorage.getItem('loanData');
@@ -34,23 +51,8 @@ window.addEventListener('load', () => {
             }  
          }
       }
-   }
-   
-   let calculator = () => {
-   /* Formulae 
-      W - property value, A - initial payment, n - cretit term (months), I - interest rate;
-    */
-      let [W, A, n, I] = [...fieldData].map(el => parseFloat(el.value.replace( /\s/g, '')));
-   
-      let C = W - A;   // Loan sum
-      let P = C * ((I / 1200) + ((I / 1200) / (Math.pow(1 + I/1200, n * 12) - 1)));   //Monthly payment
-      let R = 5 * (P / 3); //Required income
-      let L = P * n * 12 - W + A;   //Overpayment
 
-      loanSum.innerHTML = (W && A) ? `${Math.round(C).toLocaleString('fr')} ₽` : '0 ₽';      
-      overPayment.innerHTML  = (W && A && n && I) ? `${Math.round(L).toLocaleString('fr')} ₽` : '0 ₽';
-      monthlyPayment.innerHTML = (W && A && n && I) ? `${Math.round(P).toLocaleString('fr')} ₽` : '0 ₽';
-      requiredIncome.innerHTML = (W && A && n && I) ? `${Math.round(R).toLocaleString('fr')} ₽` : '0 ₽';  
+      calculator();
    }
    
    checkLocalStorage();
@@ -95,9 +97,10 @@ window.addEventListener('load', () => {
       option.addEventListener('click', function() {
          checkedInput = this;
          
-         /* if(fieldData[0].value.length) {
-            fieldData[1].value = changeDisplayNumber(fieldData[0].value.replace(/\s/g, '') * checkedInput.value / 100);
-         } */
+         if(fieldData[0].value.length) {
+            let percentage = +fieldData[0].value.replace(/\s/g, '') * checkedInput.value / 100;
+            fieldData[1].value = percentage.toLocaleString('fr');
+         }
 
          calculator();
       })
@@ -105,9 +108,16 @@ window.addEventListener('load', () => {
 
    fieldData.forEach((field, ind) => {
       field.addEventListener('change', function() {
-         console.log(this, ind);
-         if(ind === 0 || ind === 1) {
-            this.value = changeDisplayNumber(this.value);
+         this.value = changeDisplayNumber(this.value);
+         checkedInput = document.querySelectorAll('input[name=options]:checked')[0];
+
+         if((ind === 0 || ind === 1) && checkedInput !== undefined) {
+            if(ind === 0) {
+               fieldData[1].value = (+fieldData[0].value.replace(/\s/g, '') * checkedInput.value / 100).toLocaleString('fr');
+            }
+            else {
+               fieldData[0].value = (+fieldData[1].value.replace(/\s/g, '') * 100 / checkedInput.value).toLocaleString('fr');
+            }
          }
 
          calculator();
