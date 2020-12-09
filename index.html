@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/script.js" defer></script>
+  <title>Кредитный калькулятор</title>
+</head>
+
+<body>
+  <div class="container-fuild m-5">
+    <div class="row mb-4">
+      <h1>Кредитный калькулятор</h1>
+      <hr/>
+    </div>
+    <div class="row">
+      <div class="col-4">
+          <label for="property-value">Стоимость недвижимости</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="property-value" data-number>
+            <div class="input-group-append">
+              <span class="input-group-text">₽</span>
+            </div>
+          </div>
+
+          <label for="initial-payment">Первоначальный взнос</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="initial-payment" data-number>
+            <div class="input-group-append">
+              <span class="input-group-text">₽</span>
+            </div>
+          </div>
+
+          <div class="btn-group btn-group-toggle flex-wrap mb-3 mr-5" data-toggle="buttons">
+            <label class="btn btn-outline-warning">
+              <input type="radio" name="options" id="option1" value="10"> 10%
+            </label>
+            <label class="btn btn-outline-warning">
+              <input type="radio" name="options" id="option2" value="15"> 15%
+            </label>
+            <label class="btn btn-outline-warning">
+              <input type="radio" name="options" id="option3" value="20"> 20%
+            </label>
+            <label class="btn btn-outline-warning">
+              <input type="radio" name="options" id="option4" value="25"> 25%
+            </label>
+            <label class="btn btn-outline-warning">
+              <input type="radio" name="options" id="option5" value="30"> 30%
+            </label>
+          </div>
+
+          <label for="credit-term">Срок кредита</label>
+          <div class="input-group mb-3">
+            <input type="number" min="0" max="30" class="form-control" id="credit-term" data-number>
+            <div class="input-group-append">
+              <span class="input-group-text">лет</span>
+            </div>
+          </div>
+
+          <label for="interest-rate">Процентная ставка</label>
+          <div class="input-group mb-3">
+            <input type="number" min="0" max="40"  step="0.1" class="form-control" id="interest-rate" data-number>
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <div class="btn-toolbar">
+            <button class="btn btn-outline-success m-1" type="submit">Сохранить</button>
+            <button class="btn btn-outline-success m-1" type="reset">Очистить</button>
+          </div>
+      </div>
+      <div class="col-4 m-auto">
+        <table class="table table-bordered">
+            <tr class="table-active">
+              <td>Ежемесячный платёж</td>
+              <td>Необходимый доход</td>
+            </tr>
+            <tr>
+              <td id="monthly-payment">0 ₽</td>
+              <td id="required-income">0 ₽</td>
+            </tr>
+            <tr class="table-active">
+              <td>Переплата</td>
+              <td>Тело кредита</td>
+            </tr>
+            <tr>
+              <td id="overpayment">0 ₽</td>
+              <td id="loan-sum">0 ₽</td>
+            </tr>
+        </table>
+      </div>
+    </div> 
+  </div>
+
+  <!-- jQuery and JS bundle w/ Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+
+</html>
