@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
    let checkedInput;
 
    let changeDisplayNumber = (str) => {
-      return (str.length) ? parseFloat(str.replace(/\s/g, '')).toLocaleString('fr') : '';
+      return (str.length) ? parseFloat(str.replace(/\s/g, '')).toLocaleString('fr') : ''; //???
    }
    
    let calculator = () => {
@@ -78,7 +78,6 @@ window.addEventListener('load', () => {
 
    resetBtn.addEventListener('click', () => {
       console.log('pressed Reset');
-
       checkedInput = document.querySelectorAll('input[name=options]:checked')[0];
 
       fieldData.forEach(field => {
@@ -95,10 +94,8 @@ window.addEventListener('load', () => {
 
    options.forEach(option => {
       option.addEventListener('click', function() {
-         checkedInput = this;
-         
          if(fieldData[0].value.length) {
-            let percentage = +fieldData[0].value.replace(/\s/g, '') * checkedInput.value / 100;
+            let percentage = +fieldData[0].value.replace(/\s/g, '') * this.value / 100;
             fieldData[1].value = percentage.toLocaleString('fr');
          }
 
@@ -108,10 +105,16 @@ window.addEventListener('load', () => {
 
    fieldData.forEach((field, ind) => {
       field.addEventListener('change', function() {
-         this.value = changeDisplayNumber(this.value);
          checkedInput = document.querySelectorAll('input[name=options]:checked')[0];
 
-         if((ind === 0 || ind === 1) && checkedInput !== undefined) {
+         if ([0, 1].includes(ind)) {
+            this.value = changeDisplayNumber(this.value.replace(/[^\d*]/g, ''));
+         } 
+         else {
+            this.value.replace('-', '');
+         }
+         
+         if(([0, 1].includes(ind)) && checkedInput !== undefined) {
             if(ind === 0) {
                fieldData[1].value = (+fieldData[0].value.replace(/\s/g, '') * checkedInput.value / 100).toLocaleString('fr');
             }
